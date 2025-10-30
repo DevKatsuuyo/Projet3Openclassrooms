@@ -1,0 +1,31 @@
+# Dépendances
+node_modules/
+package-lock.json
+
+# Fichiers de configuration locaux
+.env
+.env.local
+
+# Fichiers de base de données
+*.sqlite
+*.db
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dossier images (garde la structure mais ignore le contenu si nécessaire)
+# Backend/images/*
+# !Backend/images/.gitkeep
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
