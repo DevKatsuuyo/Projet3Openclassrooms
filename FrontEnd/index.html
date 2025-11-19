@@ -7,18 +7,23 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+<div id="edit-mode-banner" class="edit-mode-banner" style="display: none;">
+	<i class="fa-solid fa-pen-to-square"></i>
+	<span>Mode édition</span>
+</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li id="login-logout-link"><a href="login.html">login</a></li>
+			<li><img src="./assets/icons/instagram.png" alt="Instagram" id="instagram-logo"></li>
 		</ul>
 	</nav>
 </header>
@@ -35,58 +40,23 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolio-header">
+			<h2>Mes Projets</h2>
+			<button id="edit-btn" class="edit-btn" style="display: none;">
+				<i class="fa-solid fa-pen-to-square"></i> modifier
+			</button>
+		</div>
+		<div class="filters">
+			<!-- Les boutons de filtre seront créés dynamiquement via JavaScript -->
+		</div>
 		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
+			<!-- Les travaux seront chargés dynamiquement via JavaScript -->
 		</div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
+		<form action="#" method="post" onsubmit="return false;">
 			<label for="name">Nom</label>
 			<input type="text" name="name" id="name">
 			<label for="email">Email</label>
@@ -105,5 +75,65 @@
 		</ul>
 	</nav>
 </footer>
+
+<!-- Modale de gestion des travaux -->
+<div id="modal" class="modal" style="display: none;">
+	<div class="modal-overlay"></div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button class="modal-back-btn" id="modal-back-btn" style="display: none;">
+				<i class="fa-solid fa-arrow-left"></i>
+			</button>
+			<h3 id="modal-title">Galerie photo</h3>
+			<button class="modal-close-btn" id="modal-close-btn">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+		</div>
+		
+		<div class="modal-body">
+			<!-- Zone 1 : Galerie pour suppression -->
+			<div id="modal-gallery-zone" class="modal-zone">
+				<div class="modal-gallery-container">
+					<!-- Les travaux seront ajoutés dynamiquement -->
+				</div>
+				<div class="modal-separator"></div>
+				<button class="modal-add-photo-btn" id="modal-add-photo-btn">
+					Ajouter une photo
+				</button>
+			</div>
+	
+			<div id="modal-form-zone" class="modal-zone" style="display: none;">
+				<div class="add-work-form">
+					<div class="form-image-upload">
+						<i class="fa-regular fa-image"></i>
+						<label for="work-image" class="image-upload-label">
+							<span class="upload-btn-content">
+								<i class="fa-solid fa-plus"></i> Ajouter photo
+							</span>
+							<input type="file" id="work-image" name="image" accept="image/jpeg,image/png">
+						</label>
+						<p class="image-upload-info">jpg, png : 4mo max</p>
+						<div class="image-preview" id="image-preview" style="display: none;">
+							<img id="preview-img" src="" alt="Preview">
+						</div>
+					</div>
+					<label for="work-title">Titre</label>
+					<input type="text" id="work-title" name="title">
+					<label for="work-category">Catégorie</label>
+					<select id="work-category" name="category">
+						<option value="">Sélectionnez une catégorie</option>
+						<!-- Les catégories seront ajoutées dynamiquement -->
+					</select>
+					<div class="modal-separator"></div>
+					<button type="button" class="modal-submit-btn" id="modal-submit-btn">
+						Valider
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="./assets/script.js"></script>
 </body>
 </html>
